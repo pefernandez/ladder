@@ -1,4 +1,5 @@
 import './game-result.model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Person {
   final String name;
@@ -6,7 +7,9 @@ class Person {
   Person({this.name, this.points});
 
   static getAll() {
-
+    return Firestore.instance
+      .collection('people')
+      .snapshots();
   }
 
   @override
@@ -26,17 +29,8 @@ class Person {
         ).toList();
     }
     GameResult match = matches[0];
-    if (people.containsKey(match.winner)) {
-      people.update(match.winner, (int covariant) => people[match.winner] + 1);
-    } else {
-      people[match.winner] = 1;
-    }
-
-    if (people.containsKey(match.loser)) {
-      people.update(match.loser, (int covariant) => people[match.loser] - 1);
-    } else {
-      people[match.loser] = -1;
-    }
+    people[match.winner] = people.containsKey(match.winner) ? people[match.winner] + 1 : 1;
+    people[match.loser] = people.containsKey(match.loser) ? people[match.loser] - 1 : -1;
     List<GameResult> rest = matches.skip(1).toList();
     return scores(people, rest);
   }

@@ -6,6 +6,7 @@ class PersonWidget extends StatelessWidget{
   final Person person;
   final TextStyle _nameStyle = new TextStyle(
     color: Colors.white,
+    fontSize: 18.0,
     fontWeight: FontWeight.w500,
   );
   final TextStyle _pointStyle = new TextStyle(
