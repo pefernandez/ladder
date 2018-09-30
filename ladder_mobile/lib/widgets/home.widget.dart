@@ -34,6 +34,7 @@ class HomeWidgetState extends State<HomeWidget> {
       List<GameResult> matches = snapshot.documents.map((match) => new GameResult(
         winner: match['winner'],
         loser: match['loser'],
+        timestamp: match['timestamp'],
       )).toList();
       setState(() {
         this.people = Person.scores({}, matches);
