@@ -29,8 +29,17 @@ class Person {
         ).toList();
     }
     GameResult match = matches[0];
-    people[match.winner] = people.containsKey(match.winner) ? people[match.winner] + 1 : 1;
-    people[match.loser] = people.containsKey(match.loser) ? people[match.loser] - 1 : -1;
+    people.update(
+      match.winner,
+      (int c) => people[match.winner] + 1,
+      ifAbsent: () => 1
+    );
+
+    people.update(
+      match.loser,
+      (int c) => people[match.loser] - 1,
+      ifAbsent: () => -1
+    );
     List<GameResult> rest = matches.skip(1).toList();
     return scores(people, rest);
   }
