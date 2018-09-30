@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import '../models/person.model.dart';
+import './person.widget.dart';
+import './title.widget.dart';
+import '../models/game-result.model.dart';
 
 class HomeWidget extends StatefulWidget {
   @override
@@ -9,33 +13,62 @@ class HomeWidgetState extends State<HomeWidget> {
 
   final RadialGradient _gradient = const RadialGradient(
     center: const Alignment(0.7, -1.0),
-    stops: [0.2, 1.0],
-    radius: 1.9,
+    stops: [0.2, 1.4],
+    radius: 1.8,
     colors: [
       const Color.fromARGB(255, 109, 82, 190),
       const Color.fromARGB(255, 226, 51, 51),
     ]
   );
 
-  final TextStyle _kopStyle = new TextStyle(
-    fontSize: 47.0,
-    fontWeight: FontWeight.w300,
-    color: Colors.white,
-  );
+  List<Person> people = [];
 
   @override
-  Widget build(BuildContext ctx) => new Scaffold(
-    body: new Container(
-      decoration: new BoxDecoration(
-        gradient: this._gradient,
-      ),
-      child: new Column(children: [
-        new Padding(
-          padding: EdgeInsets.fromLTRB(22.0, 58.0, 0.0, 18.0),
-          child: new Text('King of Pong', style: this._kopStyle)
+  initState() {
+    _getPeople();
+    super.initState();
+  }
+
+  _getPeople () {
+    GameResult.getAll().listen((snapshot) {
+      List<GameResult> matches = snapshot.documents.map((match) => new GameResult(
+        winner: match['winner'],
+        loser: match['loser'],
+      )).toList();
+      setState(() {
+        this.people = Person.scores({}, matches);
+        this.people.sort((a, b) => a.points > b.points ? -1 : 1);
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext ctx) {
+
+    List<PersonWidget> list = this.people.map(
+      (Person person) => new PersonWidget(person: person)
+    ).toList();
+
+    return new Scaffold(
+      body: new Container(
+        decoration: new BoxDecoration(
+          gradient: this._gradient,
         ),
-        new Center(child: new Text('test')),
-      ]),
-    )
-  );
+        child: new Column(children: [
+          new TitleWidget('The King of Pong'),
+          new Expanded(
+            child: new Padding(
+              padding: new EdgeInsets.only(left: 24.0, right: 24.0),
+              child: new ListView(children: list)
+            )
+          ),
+        ]),
+      ),
+      floatingActionButton: new FloatingActionButton(
+        mini: true,
+        child: new Icon(Icons.add),
+        onPressed: () => debugPrint('pressed'),
+      ),
+    );
+  }
 }
