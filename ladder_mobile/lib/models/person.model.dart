@@ -19,20 +19,18 @@ class Person {
     return '${this.name} (${this.points})';
   }
 
-  static List<int> calculateMatch({int a, int b, bool p1Won}) {
+  static List<int> calculateMatch(int a, int b) {
     const int K = 32;
-    double pA = 1 / (1 + (pow(10, a - b) / 400));
-    double pB = 1 / (1 + (pow(10, b - a) / 400));
-    double aNew, bNew;
-    if (p1Won) { 
-      aNew = a + K * (1 - pA); 
-      bNew = b + K * (0 - pB); 
-    } else { 
-      aNew = a + K * (0 - pA); 
-      bNew = b + K * (1 - pB); 
-    } 
+    double pA = 1 / (1 + (pow(10, (a - b) / 400)));
+    double pB = 1 / (1 + (pow(10, (b - a) / 400)));
+    double rA, rB;
 
-    return [aNew.round(), bNew.round()];
+    debugPrint("$a ($pA) $b ($pB)");
+    
+    rA = a + K * (1 - pA);
+    rB = b + K * (0 - pB);
+
+    return [rA.round(), rB.round()];
   }
 
   static List<Person> scores(
@@ -49,7 +47,7 @@ class Person {
     GameResult match = matches[0];
     int ratingWinner = people.containsKey(match.winner) ? people[match.winner] : 1500;
     int ratingLoser = people.containsKey(match.loser) ? people[match.loser] : 1500;
-    List<int> newRatings = calculateMatch(a: ratingWinner, b: ratingLoser, p1Won: true);
+    List<int> newRatings = calculateMatch(ratingWinner, ratingLoser);
 
     debugPrint("${match.timestamp} - ${match.winner} ($ratingWinner) vs. ${match.loser} ($ratingLoser) = ${match.winner} ($newRatings)");
 
