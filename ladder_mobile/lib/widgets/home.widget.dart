@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/person.model.dart';
 import './person.widget.dart';
 import './title.widget.dart';
+import './game-reporter.widget.dart';
 import '../models/game-result.model.dart';
 
 class HomeWidget extends StatefulWidget {
@@ -11,6 +12,7 @@ class HomeWidget extends StatefulWidget {
 
 class HomeWidgetState extends State<HomeWidget> {
 
+  List<Person> people = [];
   final RadialGradient _gradient = const RadialGradient(
     center: const Alignment(0.7, -1.0),
     stops: [0.2, 1.4],
@@ -20,8 +22,6 @@ class HomeWidgetState extends State<HomeWidget> {
       const Color.fromARGB(255, 226, 51, 51),
     ]
   );
-
-  List<Person> people = [];
 
   @override
   initState() {
@@ -68,7 +68,7 @@ class HomeWidgetState extends State<HomeWidget> {
       floatingActionButton: new FloatingActionButton(
         mini: true,
         child: new Icon(Icons.add),
-        onPressed: () => debugPrint('pressed'),
+        onPressed: () => showModalBottomSheet(context: ctx, builder: (ctx) => new GameReporterWidget()),
       ),
     );
   }

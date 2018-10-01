@@ -1,4 +1,4 @@
-# ladder_mobile
+# King of Pong
 
 A new Flutter project.
 
