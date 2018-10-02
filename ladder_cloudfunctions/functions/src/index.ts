@@ -18,7 +18,7 @@ export const allMatches = functions.https.onRequest(async (req, res) => {
 });
 
 export const reportMatch = functions.https.onRequest(async (req, res) => {
-  const now = Date.now();
+  const now = new Date();
   const { winner, loser } = req.body;
   return db
     .collection('matches')
