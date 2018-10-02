@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import './raised-icon-button.widget.dart';
 import '../models/person.model.dart';
-import 'package:cloud_functions/cloud_functions.dart';
+import 'package:http/http.dart' as http;
 
 class PersonWidget extends StatelessWidget{
 
@@ -36,18 +36,10 @@ class PersonWidget extends StatelessWidget{
               style: new TextStyle(fontWeight: FontWeight.w800)
             ),
             onPressed: () async {
-              try {
-                dynamic resp = CloudFunctions.instance.call(
-                  functionName: 'reportMatch',
-                  parameters: {
-                    'winner': this.me.name,
-                    'loser': this.person.name,
-                  }
-                );
-                debugPrint(resp.toString());
-              } catch (error) {
-                debugPrint(error.toString());
-              }
+              await http.post('https://us-central1-ladder-41a39.cloudfunctions.net/reportMatch', body: {
+                'winner': this.me.name,
+                'loser': this.person.name,
+              });
             },
           )
         ],
