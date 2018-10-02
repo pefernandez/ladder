@@ -24,7 +24,7 @@ exports.allMatches = functions.https.onRequest((req, res) => __awaiter(this, voi
     });
 }));
 exports.reportMatch = functions.https.onRequest((req, res) => __awaiter(this, void 0, void 0, function* () {
-    const now = Date.now();
+    const now = new Date();
     const { winner, loser } = req.body;
     return db
         .collection('matches')
