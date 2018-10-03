@@ -24,6 +24,15 @@ class HomeWidgetState extends State<HomeWidget> {
     ]
   );
 
+  final Function _onReport = (String name) {
+    return () async {
+      await http.post('https://us-central1-ladder-41a39.cloudfunctions.net/reportMatch', body: {
+        'winner': 'Damoon',
+        'loser': name,
+      });
+    };
+  };
+
   @override
   initState() {
     _getPeople();
@@ -41,13 +50,7 @@ class HomeWidgetState extends State<HomeWidget> {
         this.people = Person.scores({}, matches);
         this.people.sort((a, b) => a.points > b.points ? -1 : 1);
         this.list = this.people.map(
-          (Person person) => new PersonWidget(person: person, onReport: () async {
-            await http.post('https://us-central1-ladder-41a39.cloudfunctions.net/reportMatch', body: {
-              'winner': 'Johannes',
-              'loser': person.name,
-            });
-            setState(() {});
-          })
+          (Person person) => new PersonWidget(person: person, onReport: this._onReport(person.name))
         ).toList();
       });
     });
