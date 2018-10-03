@@ -35,7 +35,16 @@ class PersonWidget extends StatelessWidget{
               style: new TextStyle(fontWeight: FontWeight.w800)
             ),
             onPressed: this.onReport
-          )
+          ),
+          RaisedIconButton(
+            icon: const Icon(Icons.timeline),
+            label: new Text('History', 
+              style: new TextStyle(fontWeight: FontWeight.w800)
+            ),
+            onPressed: () {
+              Navigator.of(ctx).pushNamed('/timeline/${this.person.name}');
+            }
+          ),
         ],
       )
     ],
