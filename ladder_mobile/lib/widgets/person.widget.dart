@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import './raised-icon-button.widget.dart';
 import '../models/person.model.dart';
-import 'package:http/http.dart' as http;
 
 class PersonWidget extends StatelessWidget{
 
   final Person person;
-  final Person me;
+  final Function onReport;
   
   final TextStyle _nameStyle = new TextStyle(
     color: Colors.white,
@@ -18,7 +17,7 @@ class PersonWidget extends StatelessWidget{
     color: Colors.grey.shade200,
     fontSize: 14.0,
   );
-  PersonWidget({this.person, this.me});
+  PersonWidget({@required this.person, this.onReport});
 
   @override
   Widget build(BuildContext ctx) => new ExpansionTile(
@@ -35,12 +34,7 @@ class PersonWidget extends StatelessWidget{
             label: new Text('Gottem!', 
               style: new TextStyle(fontWeight: FontWeight.w800)
             ),
-            onPressed: () async {
-              await http.post('https://us-central1-ladder-41a39.cloudfunctions.net/reportMatch', body: {
-                'winner': this.me.name,
-                'loser': this.person.name,
-              });
-            },
+            onPressed: this.onReport
           )
         ],
       )

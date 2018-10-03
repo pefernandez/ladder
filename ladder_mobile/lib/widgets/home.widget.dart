@@ -3,6 +3,7 @@ import '../models/person.model.dart';
 import './person.widget.dart';
 import './title.widget.dart';
 import '../models/game-result.model.dart';
+import 'package:http/http.dart' as http;
 
 class HomeWidget extends StatefulWidget {
   @override
@@ -12,7 +13,7 @@ class HomeWidget extends StatefulWidget {
 class HomeWidgetState extends State<HomeWidget> {
 
   List<Person> people = [];
-  Person me = new Person(name: 'Damoon', points: 1500);
+  List<PersonWidget> list = [];
   final RadialGradient _gradient = const RadialGradient(
     center: const Alignment(0.7, -1.0),
     stops: [0.2, 1.4],
@@ -39,16 +40,21 @@ class HomeWidgetState extends State<HomeWidget> {
       setState(() {
         this.people = Person.scores({}, matches);
         this.people.sort((a, b) => a.points > b.points ? -1 : 1);
+        this.list = this.people.map(
+          (Person person) => new PersonWidget(person: person, onReport: () async {
+            await http.post('https://us-central1-ladder-41a39.cloudfunctions.net/reportMatch', body: {
+              'winner': 'Johannes',
+              'loser': person.name,
+            });
+            setState(() {});
+          })
+        ).toList();
       });
     });
   }
 
   @override
   Widget build(BuildContext ctx) {
-
-    List<PersonWidget> list = this.people.map(
-      (Person person) => new PersonWidget(person: person, me: this.me)
-    ).toList();
 
     return new Scaffold(
       body: new Container(
