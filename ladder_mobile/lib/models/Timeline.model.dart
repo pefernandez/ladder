@@ -6,7 +6,7 @@ class Timeline {
   static Future<List<Game>> getFor({String name}) async {
     QuerySnapshot matches = await Firestore.instance
       .collection('matches')
-      .orderBy('timestamp', descending: false)
+      .orderBy('timestamp', descending: true)
       .getDocuments();
 
     return matches.documents
