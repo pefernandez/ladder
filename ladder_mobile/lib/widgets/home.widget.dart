@@ -4,6 +4,7 @@ import './person.widget.dart';
 import './title.widget.dart';
 import '../models/game.model.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 class HomeWidget extends StatefulWidget {
   @override
@@ -59,21 +60,29 @@ class HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext ctx) {
 
-    return new Scaffold(
-      body: new Container(
-        decoration: new BoxDecoration(
-          gradient: this._gradient,
-        ),
-        child: new Column(children: [
-          new TitleWidget('The King of Pong'),
-          new Expanded(
-            child: new Padding(
-              padding: new EdgeInsets.only(left: 24.0, right: 24.0),
-              child: new ListView(children: list)
-            )
-          ),
-        ]),
+    Widget first = new Container(
+      decoration: new BoxDecoration(
+        gradient: this._gradient,
       ),
+      child: new Column(children: [
+        new TitleWidget('The King of Pong'),
+        new Expanded(
+          child: new Padding(
+            padding: new EdgeInsets.only(left: 24.0, right: 24.0),
+            child: new ListView(children: list)
+          )
+        ),
+      ]),
+    );
+
+    Widget second = new Center(child: new Text('Implement global history here'));
+    List<Widget> widgetList = [first, second];
+
+    return new Scaffold(
+      body: new Swiper(
+        itemCount: widgetList.length,
+        itemBuilder: (BuildContext context, int i) => widgetList[i],
+      )
     );
   }
 }

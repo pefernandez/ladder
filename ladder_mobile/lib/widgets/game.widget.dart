@@ -8,7 +8,7 @@ class GameWidget extends StatelessWidget {
   final TextStyle activeStyle = new TextStyle(
     fontSize: 22.0,
     fontWeight: FontWeight.w400,
-    color: Colors.deepOrange.shade400,
+    color: const Color.fromRGBO(185, 215, 117, 1.0),
   );
   final TextStyle passiveStyle = const TextStyle(
     fontSize: 22.0,

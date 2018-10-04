@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './widgets/home.widget.dart';
-import './widgets/timeline.widget.dart';
+import './widgets/personal-timeline.widget.dart';
 
 void main() => runApp(new KingOfPong());
 
@@ -11,7 +11,7 @@ Route<Null> _getRoute(RouteSettings settings) {
   } else if (path.indexOf('timeline') >= 0) {
     String name = path[path.length - 1];
     return new MaterialPageRoute<Null>(
-      builder: (BuildContext context) => new TimelineWidget(name: name),
+      builder: (BuildContext context) => new PersonalTimelineWidget(name: name),
     );
   } else {
     return new MaterialPageRoute<Null>(

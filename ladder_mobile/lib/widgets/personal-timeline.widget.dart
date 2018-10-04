@@ -4,20 +4,20 @@ import '../models/Timeline.model.dart';
 import './game.widget.dart';
 import 'title.widget.dart';
 
-class TimelineWidget extends StatefulWidget {
+class PersonalTimelineWidget extends StatefulWidget {
 
   final String name;
 
-  TimelineWidget({this.name});
+  PersonalTimelineWidget({this.name});
 
   @override
-  State<StatefulWidget> createState() => new TimelineWidgetState(name: this.name);
+  State<StatefulWidget> createState() => new PersonalTimelineWidgetState(name: this.name);
 }
 
-class TimelineWidgetState extends State<TimelineWidget> {
+class PersonalTimelineWidgetState extends State<PersonalTimelineWidget> {
   final String name;
   List<Game> games = [];
-  TimelineWidgetState({this.name});
+  PersonalTimelineWidgetState({this.name});
   int wins = 0;
   int losses = 0;
   TextStyle infoStyle = new TextStyle(
