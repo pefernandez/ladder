@@ -51,16 +51,3 @@ class PersonWidget extends StatelessWidget{
   );
 
 }
-
-/**
- * new Padding(
-    padding: new EdgeInsets.only(top: 8.0, bottom: 8.0),
-    child: new Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        new Text(this.person.name, style: _nameStyle),
-        new Text(this.person.points.toString(), style: _pointStyle),
-      ]
-    )
-  );
- */

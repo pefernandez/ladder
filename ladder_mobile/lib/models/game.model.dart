@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 
-class GameResult {
+class Game {
   final String winner;
   final String loser;
   final DateTime timestamp;
 
-  GameResult({this.winner, this.loser, this.timestamp});
+  Game({this.winner, this.loser, this.timestamp});
 
   @override
   toString() {

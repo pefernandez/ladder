@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/person.model.dart';
 import './person.widget.dart';
 import './title.widget.dart';
-import '../models/game-result.model.dart';
+import '../models/game.model.dart';
 import 'package:http/http.dart' as http;
 
 class HomeWidget extends StatefulWidget {
@@ -40,8 +40,8 @@ class HomeWidgetState extends State<HomeWidget> {
   }
 
   _getPeople () {
-    GameResult.getAll().listen((snapshot) {
-      List<GameResult> matches = snapshot.documents.map((match) => new GameResult(
+    Game.getAll().listen((snapshot) {
+      List<Game> matches = snapshot.documents.map((match) => new Game(
         winner: match['winner'],
         loser: match['loser'],
         timestamp: match['timestamp'],

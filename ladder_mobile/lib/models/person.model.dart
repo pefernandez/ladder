@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import './game-result.model.dart';
+import './game.model.dart';
 
 class Person {
   final String name;
@@ -33,7 +33,7 @@ class Person {
 
   static List<Person> scores(
     Map<String, int> people,
-    List<GameResult> matches
+    List<Game> matches
   ) {
     if (matches.length == 0) {
       return people
@@ -42,7 +42,7 @@ class Person {
           new Person(name: entry.key, points: entry.value)
         ).toList();
     }
-    GameResult match = matches[0];
+    Game match = matches[0];
     int ratingWinner = people.containsKey(match.winner) ? people[match.winner] : 1500;
     int ratingLoser = people.containsKey(match.loser) ? people[match.loser] : 1500;
     List<int> newRatings = calculateMatch(ratingWinner, ratingLoser);
@@ -58,7 +58,7 @@ class Person {
       (int c) => newRatings[1],
       ifAbsent: () => newRatings[1]
     );
-    List<GameResult> rest = matches.skip(1).toList();
+    List<Game> rest = matches.skip(1).toList();
     return scores(people, rest);
   }
 }

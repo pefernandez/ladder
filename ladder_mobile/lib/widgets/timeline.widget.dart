@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '../models/game-result.model.dart';
+import '../models/game.model.dart';
 import '../models/Timeline.model.dart';
+import './game.widget.dart';
+import 'title.widget.dart';
 
 class TimelineWidget extends StatefulWidget {
 
@@ -14,8 +16,17 @@ class TimelineWidget extends StatefulWidget {
 
 class TimelineWidgetState extends State<TimelineWidget> {
   final String name;
-  List<GameResult> games = [];
+  List<Game> games = [];
   TimelineWidgetState({this.name});
+  final RadialGradient gradient = const RadialGradient(
+    center: const Alignment(0.7, -1.0),
+    stops: [0.2, 1.4],
+    radius: 1.8,
+    colors: [
+      const Color.fromARGB(255, 61, 132, 142),
+      const Color.fromARGB(255, 204, 85, 85),
+    ]
+  );
 
   @override
   initState() {
@@ -31,17 +42,24 @@ class TimelineWidgetState extends State<TimelineWidget> {
   @override
   Widget build(BuildContext ctx) {
 
-    List<ListTile> list = List.generate(this.games.length, (int i) =>
-      new ListTile(
-        leading: new Text(this.games[i].winner),
-        trailing: new Text(this.games[i].loser),
-        subtitle: new Text(this.games[i].timestamp.toIso8601String()),
-      )
+    List<GameWidget> list = List.generate(this.games.length, (int i) =>
+      new GameWidget(game: this.games[i], name: this.name)
     );
 
     return new Scaffold(
-      body: new Column(
-        children: list,
+      body: new Container(
+        decoration: new BoxDecoration(
+          gradient: this.gradient,
+        ),
+        child: new Column(children: [
+          new TitleWidget('Match History'),
+          new Expanded(
+            child: new Padding(
+              padding: new EdgeInsets.only(left: 24.0, right: 24.0),
+              child: new ListView(children: list)
+            )
+          ),
+        ]),
       ),
     );
   }
