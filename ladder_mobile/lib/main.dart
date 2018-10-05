@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import './widgets/home.widget.dart';
 import './widgets/personal-timeline.widget.dart';
 
-void main() => runApp(new KingOfPong());
+void main() => runApp(new MonarchOfPong());
 
 Route<Null> _getRoute(RouteSettings settings) {
   final List<String> path = settings.name.split('/');
@@ -20,7 +20,7 @@ Route<Null> _getRoute(RouteSettings settings) {
   }
 }
 
-class KingOfPong extends StatelessWidget {
+class MonarchOfPong extends StatelessWidget {
   // This widget is the root of your application.
 
   @override

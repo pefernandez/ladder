@@ -65,7 +65,7 @@ class HomeWidgetState extends State<HomeWidget> {
         gradient: this._gradient,
       ),
       child: new Column(children: [
-        new TitleWidget('The King of Pong'),
+        new TitleWidget('The Monarch of Pong'),
         new Expanded(
           child: new Padding(
             padding: new EdgeInsets.only(left: 24.0, right: 24.0),
